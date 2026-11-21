@@ -7,6 +7,7 @@ Strictly adheres to Chandigarh University AIT-CSE guidelines:
 - Standard chapter structure, appendices, weekly reports, certificates, and references
 """
 
+import utils.session
 import docx
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH

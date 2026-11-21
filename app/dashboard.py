@@ -89,10 +89,10 @@ st.markdown("""
     div[data-testid="stRadio"] [role="radiogroup"] {
         gap: 4px !important;
     }
-    /* Completely hide native radio circles across BaseWeb and Streamlit */
-    div[data-testid="stRadio"] label > div:not([data-testid="stMarkdownContainer"]),
-    div[data-testid="stRadio"] [data-baseweb="radio"] > div:not([data-testid="stMarkdownContainer"]),
-    div[data-testid="stRadio"] [data-testid="stRadioBtnCircle"],
+    /* Hide ONLY the radio circle (ex50key4) and native radio input - NEVER touch the text */
+    .ex50key4,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"] .ex50key4,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"] > div > div:first-child,
     div[data-testid="stRadio"] input[type="radio"] {
         display: none !important;
         visibility: hidden !important;
@@ -101,36 +101,52 @@ st.markdown("""
         margin: 0 !important;
         padding: 0 !important;
         opacity: 0 !important;
-        pointer-events: none !important;
     }
-    div[data-testid="stRadio"] label {
+
+    /* Style the navigation buttons cleanly */
+    div[data-testid="stRadio"] label,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"] {
         background: #111115 !important;
         border: 1px solid #222227 !important;
-        border-radius: 6px !important;
-        padding: 9px 14px !important;
-        margin-bottom: 3px !important;
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 4px !important;
         transition: all 0.15s ease !important;
         cursor: pointer !important;
         width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
+        display: block !important;
     }
-    div[data-testid="stRadio"] label:hover {
+    div[data-testid="stRadio"] label:hover,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"]:hover {
         background: #18181f !important;
         border-color: #3f3f46 !important;
     }
-    div[data-testid="stRadio"] label div[data-testid="stMarkdownContainer"] p {
-        font-size: 0.84rem !important;
+
+    /* Selected Active Page (Bold White Pill) */
+    div[data-testid="stRadio"] label:has(input:checked),
+    div[data-testid="stRadio"] [data-testid="stRadioOption"]:has(input:checked),
+    div[data-testid="stRadio"] [data-testid="stRadioOption"][aria-checked="true"] {
+        background: #ffffff !important;
+        border: 1px solid #ffffff !important;
+    }
+
+    /* Ensure Navigation Labels are ALWAYS 100% visible with crisp typography */
+    div[data-testid="stRadio"] [data-testid="stMarkdownContainer"],
+    div[data-testid="stRadio"] [data-testid="stMarkdownContainer"] p,
+    div[data-testid="stRadio"] label p {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 0.86rem !important;
         font-weight: 500 !important;
         color: #a1a1aa !important;
         margin: 0 !important;
         letter-spacing: -0.01em !important;
     }
-    div[data-testid="stRadio"] label:has(input:checked) {
-        background: #ffffff !important;
-        border: 1px solid #ffffff !important;
-    }
-    div[data-testid="stRadio"] label:has(input:checked) div[data-testid="stMarkdownContainer"] p {
+
+    div[data-testid="stRadio"] label:has(input:checked) [data-testid="stMarkdownContainer"] p,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"]:has(input:checked) [data-testid="stMarkdownContainer"] p,
+    div[data-testid="stRadio"] [data-testid="stRadioOption"][aria-checked="true"] [data-testid="stMarkdownContainer"] p {
         color: #000000 !important;
         font-weight: 700 !important;
     }

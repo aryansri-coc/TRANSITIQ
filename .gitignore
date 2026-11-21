@@ -16,3 +16,5 @@ desktop.ini
 
 # Logs & temp files
 *.log
+config.bat
+node_modules
