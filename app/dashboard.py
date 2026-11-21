@@ -154,17 +154,18 @@ st.markdown("""
 
     /* Metric Cards */
     div[data-testid="stMetric"] {
-        background: #09090b !important;
-        border: 1px solid #1f1f23 !important;
-        border-radius: 8px !important;
+        background: #0d0d12 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 10px !important;
         padding: 1rem 1.2rem !important;
+        box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.3) !important;
     }
     div[data-testid="stMetric"]:hover {
-        border-color: #333338 !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
     }
     div[data-testid="stMetricLabel"] p {
         font-size: 0.72rem !important;
-        color: #71717a !important;
+        color: #8b8b96 !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.08em !important;
@@ -178,37 +179,49 @@ st.markdown("""
 
     /* Form Inputs & Selectboxes */
     label[data-testid="stWidgetLabel"] p {
-        font-size: 0.8rem !important;
-        font-weight: 500 !important;
-        color: #a1a1aa !important;
-        margin-bottom: 4px !important;
+        font-size: 0.74rem !important;
+        font-weight: 600 !important;
+        color: #8b8b96 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 6px !important;
     }
     div[data-baseweb="select"] > div {
-        background-color: #0c0c0e !important;
-        border-color: #222226 !important;
-        border-radius: 6px !important;
+        background-color: #121217 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 8px !important;
         color: #ffffff !important;
+        min-height: 44px !important;
+        padding: 2px 8px !important;
+        transition: all 0.15s ease !important;
     }
     div[data-baseweb="select"] > div:hover {
-        border-color: #3f3f46 !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+        background-color: #16161c !important;
+    }
+    div[data-baseweb="select"] > div:focus-within {
+        border-color: #ffffff !important;
+        box-shadow: 0 0 0 1px #ffffff !important;
     }
 
-    /* Minimal Buttons */
+    /* Minimal High-End Buttons */
     div.stButton > button {
         background: #ffffff !important;
         color: #000000 !important;
         border: 1px solid #ffffff !important;
-        border-radius: 6px !important;
-        padding: 0.6rem 1.2rem !important;
-        font-weight: 600 !important;
-        font-size: 0.85rem !important;
+        border-radius: 8px !important;
+        padding: 0.7rem 1.4rem !important;
+        font-weight: 700 !important;
+        font-size: 0.88rem !important;
         letter-spacing: -0.01em !important;
         transition: all 0.15s ease !important;
+        box-shadow: 0 4px 14px rgba(255, 255, 255, 0.12) !important;
     }
     div.stButton > button:hover {
         background: #e4e4e7 !important;
         border-color: #e4e4e7 !important;
-        transform: translateY(-1px) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.22) !important;
     }
     div.stButton > button:active {
         transform: translateY(0px) !important;
@@ -216,22 +229,33 @@ st.markdown("""
 
     /* Custom Container Framing */
     div[data-testid="stVerticalBlockBorderWrapper"] {
-        border-color: #1a1a1e !important;
-        border-radius: 8px !important;
-        background-color: #09090b !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        background-color: #0d0d12 !important;
+        box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4) !important;
+        padding: 0.6rem !important;
     }
 
     /* Badges */
     .mono-badge {
         display: inline-block;
         padding: 3px 9px;
-        border: 1px solid #333336;
-        background: #141416;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #14141a;
         color: #d4d4d8;
         font-size: 0.7rem;
         font-weight: 600;
         border-radius: 4px;
         letter-spacing: 0.04em;
+    }
+
+    /* Progress bar */
+    .stProgress > div > div > div > div {
+        background-color: #ffffff !important;
+    }
+    .stProgress > div > div > div {
+        background-color: #22222a !important;
+        border-radius: 4px !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -473,7 +497,7 @@ if menu in ["Operations Dashboard", "Overview"]:
         )
 
 # ==============================================================================
-# 2. TICKETING OPERATIONS (CLEAN MINIMAL TERMINAL, NO CODE DUMPS)
+# 2. TICKETING OPERATIONS (HIGH-END MINIMAL TERMINAL)
 # ==============================================================================
 elif menu == "Ticketing Operations":
     bookable = TransitService.get_bookable_trips()
@@ -481,53 +505,63 @@ elif menu == "Ticketing Operations":
     if not bookable:
         st.warning("No active trips scheduled. Please re-seed data in the Database section.")
     else:
-        trip_map = {
-            f"{t['trip_code']} | {t['route_name']} ({t['vehicle_code']}) - Dep: {t['scheduled_departure']}": t
-            for t in bookable
-        }
+        def format_trip_label(t):
+            dep_raw = str(t['scheduled_departure'])
+            time_str = dep_raw.split(' ')[1][:5] if ' ' in dep_raw else dep_raw[:5]
+            return f"{t['route_name']} • {time_str} ({t['vehicle_code']})"
 
-        col_form, col_summary = st.columns([6, 5])
+        trip_map = {format_trip_label(t): t for t in bookable}
+
+        col_form, col_summary = st.columns([1, 1], gap="large")
 
         with col_form:
             with st.container(border=True):
-                st.markdown("##### Issue Electronic Passenger Ticket")
-                st.caption("ACID Transaction Engine • Concession Calculation • Atomic Inventory Commit")
+                st.markdown("""
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div>
+                            <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; color: #8b8b96; text-transform: uppercase;">Ticketing Terminal</div>
+                            <div style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-top: 2px;">Issue Passenger Ticket</div>
+                        </div>
+                        <span class="mono-badge">ACID PROTOCOL</span>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 selected_trip_label = st.selectbox("Scheduled Transit Service", list(trip_map.keys()))
                 trip_data = trip_map[selected_trip_label]
                 trip_stops = TransitService.get_stops_for_trip(trip_data["trip_id"])
 
-                c_orig, c_dest = st.columns(2)
+                orig_opts = {s['stop_name']: s['stop_id'] for s in trip_stops[:-1]}
+                dest_opts = {s['stop_name']: s['stop_id'] for s in trip_stops[1:]}
+
+                c_orig, c_dest = st.columns(2, gap="medium")
                 with c_orig:
-                    orig_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[:-1]}
-                    sel_orig_label = st.selectbox("Origin Station", list(orig_opts.keys()))
-                    sel_orig_id = orig_opts[sel_orig_label]
+                    sel_orig_name = st.selectbox("Origin Station", list(orig_opts.keys()))
+                    sel_orig_id = orig_opts[sel_orig_name]
 
                 with c_dest:
-                    dest_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[1:]}
-                    sel_dest_label = st.selectbox("Destination Station", list(dest_opts.keys()))
-                    sel_dest_id = dest_opts[sel_dest_label]
+                    sel_dest_name = st.selectbox("Destination Station", list(dest_opts.keys()))
+                    sel_dest_id = dest_opts[sel_dest_name]
 
-                c_cat, c_pay = st.columns(2)
+                c_cat, c_pay = st.columns(2, gap="medium")
                 with c_cat:
                     passenger_cat = st.selectbox(
-                        "Passenger Classification",
-                        ["Standard Adult (Full Fare)", "Student (50% Concession)", "Senior Citizen (60% Concession)", "Commuter Passholder (30% Concession)"]
+                        "Passenger Category",
+                        ["Standard Adult", "Student (50% Off)", "Senior Citizen (60% Off)", "Commuter Pass (30% Off)"]
                     )
                     cat_clean = passenger_cat.split(" (")[0]
 
                 with c_pay:
                     pay_method = st.selectbox(
                         "Payment Channel",
-                        ["Transit Smartcard", "Mobile QR / UPI", "Contactless EMV", "Ticket Counter"]
+                        ["Transit Smartcard (NFC)", "Mobile UPI / QR", "Contactless EMV", "Cash Station Counter"]
                     )
 
                 st.markdown("<br>", unsafe_allow_html=True)
-                book_clicked = st.button("Confirm and Issue Ticket", use_container_width=True)
+                book_clicked = st.button("Confirm and Issue Ticket →", use_container_width=True)
 
         # Dynamic Pre-Booking Calculation
         base_fare = trip_data["base_fare"]
-        discount_map = {"Standard Adult": 1.0, "Student": 0.50, "Senior Citizen": 0.40, "Commuter Passholder": 0.70}
+        discount_map = {"Standard Adult": 1.0, "Student": 0.50, "Senior Citizen": 0.40, "Commuter Pass": 0.70}
         discount_rate = discount_map.get(cat_clean, 1.0)
         final_fare = round(base_fare * discount_rate, 2)
         discount_amt = round(base_fare - final_fare, 2)
@@ -535,27 +569,37 @@ elif menu == "Ticketing Operations":
 
         with col_summary:
             with st.container(border=True):
-                st.markdown("##### Real-Time Fare & Inventory Calculation")
-                st.caption("Pre-booking verification and inventory availability")
+                st.markdown("""
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div>
+                            <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; color: #8b8b96; text-transform: uppercase;">Real-Time Fare &amp; Inventory</div>
+                            <div style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-top: 2px;">Pre-Booking Verification</div>
+                        </div>
+                        <span class="mono-badge">LIVE CALCULATION</span>
+                    </div>
+                """, unsafe_allow_html=True)
 
-                m1, m2 = st.columns(2)
+                m1, m2 = st.columns(2, gap="medium")
                 with m1:
-                    st.metric("Base Route Fare", f"₹{base_fare:.2f}")
+                    st.metric("Base Corridor Fare", f"₹{base_fare:.2f}")
                 with m2:
                     st.metric("Concession Discount", f"-₹{discount_amt:.2f}")
 
-                st.markdown("---")
+                st.markdown("<br>", unsafe_allow_html=True)
+                st.metric("Total Payable Amount", f"₹{final_fare:.2f}")
+
+                st.markdown("<hr style='border-color: rgba(255,255,255,0.08); margin: 1rem 0;'>", unsafe_allow_html=True)
                 
-                # Clean Summary Details
-                st.write(f"**Corridor:** {trip_data['route_name']}")
-                st.write(f"**Vehicle Unit:** {trip_data['vehicle_code']} ({trip_data['capacity']} seats)")
-                st.write(f"**Occupancy:** {trip_data['booked_passengers']} / {trip_data['capacity']} booked ({occupancy_pct}%)")
+                st.markdown(f"""
+                    <div style="font-size: 0.82rem; color: #d4d4d8; line-height: 1.8;">
+                        <div><span style="color: #8b8b96;">Transit Corridor:</span> <b>{trip_data['route_name']}</b></div>
+                        <div><span style="color: #8b8b96;">Vehicle Unit:</span> <b>{trip_data['vehicle_code']}</b> ({trip_data['capacity']} seat capacity)</div>
+                        <div><span style="color: #8b8b96;">Occupancy Load:</span> <b>{trip_data['booked_passengers']} / {trip_data['capacity']} booked ({occupancy_pct}%)</b></div>
+                    </div>
+                """, unsafe_allow_html=True)
                 st.progress(occupancy_pct / 100.0)
 
-                st.markdown("---")
-                st.metric("Total Payable", f"₹{final_fare:.2f}")
-
-        # Transaction Execution & Clean Verified Receipt Output (Zero Raw HTML)
+        # Transaction Execution & Verified Boarding Pass Card
         if book_clicked:
             res = TransitService.book_ticket(
                 trip_id=trip_data["trip_id"],
@@ -566,29 +610,60 @@ elif menu == "Ticketing Operations":
             )
 
             if res["success"]:
+                st.markdown("<br>", unsafe_allow_html=True)
                 st.success("Transaction committed successfully to relational database under ACID protocol.")
                 
-                orig_name = sel_orig_label.split(". ")[1]
-                dest_name = sel_dest_label.split(". ")[1]
-
-                # Render Clean Native Streamlit Boarding Pass (No Raw HTML leakage)
                 with st.container(border=True):
-                    st.markdown("### TRANSITIQ BOARDING PASS")
-                    st.caption("METROPOLITAN TRANSIT AUTHORITY • VERIFIED ELECTRONIC FARE RECEIPT")
-                    
-                    r_col1, r_col2 = st.columns(2)
-                    with r_col1:
-                        st.write(f"**Origin:** {orig_name}")
-                        st.write(f"**Destination:** {dest_name}")
-                        st.write(f"**Service Run:** {trip_data['trip_code']}")
-                    with r_col2:
-                        st.write(f"**Ticket Reference:** `{res['ticket_reference']}`")
-                        st.write(f"**Passenger Type:** {res['passenger_type']}")
-                        st.write(f"**Payment Channel:** {res['payment_method']}")
-                    
-                    st.markdown("---")
-                    st.metric("Total Fare Paid", f"₹{res['fare_paid']:.2f}")
-                    st.caption("STATUS: CONFIRMED • ATOMIC INVENTORY DEDUCTED")
+                    st.markdown(f"""
+                        <div style="background: #08080a; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 1.4rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.9rem; margin-bottom: 1rem;">
+                                <div>
+                                    <div style="font-size: 0.85rem; font-weight: 800; letter-spacing: 0.12em; color: #ffffff;">TRANSITIQ BOARDING PASS</div>
+                                    <div style="font-size: 0.68rem; color: #8b8b96;">METROPOLITAN TRANSIT AUTHORITY &bull; VERIFIED FARE RECEIPT</div>
+                                </div>
+                                <span style="background: #ffffff; color: #000000; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; font-family: monospace;">CONFIRMED</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+                                <div>
+                                    <div style="font-size: 0.68rem; color: #8b8b96; text-transform: uppercase; letter-spacing: 0.05em;">Origin Station</div>
+                                    <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-top: 2px;">{sel_orig_name}</div>
+                                </div>
+                                <div style="font-size: 1.3rem; color: #8b8b96;">&rarr;</div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.68rem; color: #8b8b96; text-transform: uppercase; letter-spacing: 0.05em;">Destination Station</div>
+                                    <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-top: 2px;">{sel_dest_name}</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 0.78rem; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <div style="color: #8b8b96; font-size: 0.68rem; text-transform: uppercase;">Ticket Ref</div>
+                                    <div style="color: #ffffff; font-family: monospace; font-weight: 700; margin-top: 2px;">{res['ticket_reference']}</div>
+                                </div>
+                                <div>
+                                    <div style="color: #8b8b96; font-size: 0.68rem; text-transform: uppercase;">Category</div>
+                                    <div style="color: #ffffff; font-weight: 600; margin-top: 2px;">{res['passenger_type']}</div>
+                                </div>
+                                <div>
+                                    <div style="color: #8b8b96; font-size: 0.68rem; text-transform: uppercase;">Service Run</div>
+                                    <div style="color: #ffffff; font-family: monospace; margin-top: 2px;">{trip_data['trip_code']}</div>
+                                </div>
+                                <div>
+                                    <div style="color: #8b8b96; font-size: 0.68rem; text-transform: uppercase;">Payment</div>
+                                    <div style="color: #ffffff; margin-top: 2px;">{res['payment_method']}</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 1rem;">
+                                <div>
+                                    <div style="font-size: 0.68rem; color: #8b8b96; text-transform: uppercase; letter-spacing: 0.05em;">Total Fare Paid</div>
+                                    <div style="font-size: 1.5rem; font-weight: 800; color: #ffffff;">₹{res['fare_paid']:.2f}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-family: monospace; font-size: 0.75rem; color: #52525b; letter-spacing: 3px;">|||| | ||| || |||| | ||</div>
+                                    <div style="font-size: 0.62rem; color: #71717a; margin-top: 3px;">ATOMIC INVENTORY DEDUCTED</div>
+                                </div>
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
             else:
                 st.error(f"Transaction Rejected: {res['message']}")
 
