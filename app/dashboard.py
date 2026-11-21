@@ -89,17 +89,19 @@ st.markdown("""
     div[data-testid="stRadio"] [role="radiogroup"] {
         gap: 4px !important;
     }
-    /* Completely hide native radio circles */
-    div[data-testid="stRadio"] [data-baseweb="radio"] > div:first-child,
-    div[data-testid="stRadio"] input[type="radio"],
+    /* Completely hide native radio circles across BaseWeb and Streamlit */
+    div[data-testid="stRadio"] label > div:not([data-testid="stMarkdownContainer"]),
+    div[data-testid="stRadio"] [data-baseweb="radio"] > div:not([data-testid="stMarkdownContainer"]),
     div[data-testid="stRadio"] [data-testid="stRadioBtnCircle"],
-    div[data-testid="stRadio"] label > div:first-child {
+    div[data-testid="stRadio"] input[type="radio"] {
         display: none !important;
         visibility: hidden !important;
         width: 0 !important;
         height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
     div[data-testid="stRadio"] label {
         background: #111115 !important;
@@ -542,26 +544,41 @@ elif menu == "Ticketing Operations":
                     sel_dest_name = st.selectbox("Destination Station", list(dest_opts.keys()))
                     sel_dest_id = dest_opts[sel_dest_name]
 
+                passenger_map = {
+                    "Standard Adult": "Standard Adult",
+                    "Student (50% Off)": "Student",
+                    "Senior Citizen (60% Off)": "Senior Citizen",
+                    "Commuter Pass (30% Off)": "Commuter Passholder"
+                }
+
+                payment_map = {
+                    "Transit Smartcard (NFC)": "Transit Smartcard",
+                    "Mobile UPI / QR": "Mobile QR / UPI",
+                    "Contactless EMV": "Contactless EMV",
+                    "Cash Station Counter": "Ticket Counter"
+                }
+
                 c_cat, c_pay = st.columns(2, gap="medium")
                 with c_cat:
-                    passenger_cat = st.selectbox(
+                    passenger_cat_label = st.selectbox(
                         "Passenger Category",
-                        ["Standard Adult", "Student (50% Off)", "Senior Citizen (60% Off)", "Commuter Pass (30% Off)"]
+                        list(passenger_map.keys())
                     )
-                    cat_clean = passenger_cat.split(" (")[0]
+                    cat_clean = passenger_map[passenger_cat_label]
 
                 with c_pay:
-                    pay_method = st.selectbox(
+                    pay_method_label = st.selectbox(
                         "Payment Channel",
-                        ["Transit Smartcard (NFC)", "Mobile UPI / QR", "Contactless EMV", "Cash Station Counter"]
+                        list(payment_map.keys())
                     )
+                    pay_method = payment_map[pay_method_label]
 
                 st.markdown("<br>", unsafe_allow_html=True)
                 book_clicked = st.button("Confirm and Issue Ticket →", use_container_width=True)
 
         # Dynamic Pre-Booking Calculation
         base_fare = trip_data["base_fare"]
-        discount_map = {"Standard Adult": 1.0, "Student": 0.50, "Senior Citizen": 0.40, "Commuter Pass": 0.70}
+        discount_map = {"Standard Adult": 1.0, "Student": 0.50, "Senior Citizen": 0.40, "Commuter Passholder": 0.70}
         discount_rate = discount_map.get(cat_clean, 1.0)
         final_fare = round(base_fare * discount_rate, 2)
         discount_amt = round(base_fare - final_fare, 2)

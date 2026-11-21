@@ -92,7 +92,35 @@ class TransitService:
             if trip_info["current_load"] >= trip_info["capacity"]:
                 return {"success": False, "message": "Trip is at full capacity. Booking rejected."}
 
-            # 2. Compute discounted fare
+            # 2. Compute discounted fare & normalize inputs to strict schema constraints
+            norm_passenger = {
+                "standard adult": "Standard Adult",
+                "student": "Student",
+                "student (50% off)": "Student",
+                "senior citizen": "Senior Citizen",
+                "senior citizen (60% off)": "Senior Citizen",
+                "commuter pass": "Commuter Passholder",
+                "commuter passholder": "Commuter Passholder",
+                "commuter pass (30% off)": "Commuter Passholder"
+            }
+            passenger_type = norm_passenger.get(passenger_type.lower().strip(), passenger_type)
+
+            norm_payment = {
+                "transit smartcard": "Transit Smartcard",
+                "transit smartcard (nfc)": "Transit Smartcard",
+                "mobile upi / qr": "Mobile QR / UPI",
+                "mobile qr / upi": "Mobile QR / UPI",
+                "mobile upi": "Mobile QR / UPI",
+                "mobile qr": "Mobile QR / UPI",
+                "contactless emv": "Contactless EMV",
+                "contactless": "Contactless EMV",
+                "ticket counter": "Ticket Counter",
+                "cash station counter": "Ticket Counter",
+                "cash counter": "Ticket Counter",
+                "cash": "Ticket Counter"
+            }
+            payment_method = norm_payment.get(payment_method.lower().strip(), payment_method)
+
             base_fare = trip_info["base_fare"]
             discount_map = {
                 "Standard Adult": 1.0,
