@@ -29,10 +29,43 @@ st.set_page_config(
 # Minimalist Monochrome Black & White Theme (Clean, Precision Engineered)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
     
-    html, body, [class*="css"], div, span, p, label {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    /* Typography: Explicitly avoid generic 'span' and 'div' to protect icon ligatures */
+    html, body, p, h1, h2, h3, h4, h5, h6, label, div[data-testid="stMarkdownContainer"] p {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    }
+    
+    /* Protect Material Symbols icons from font override */
+    .material-symbols-rounded,
+    .material-symbols-outlined,
+    [data-testid="stIconMaterial"],
+    [data-testid="stSidebarCollapseButton"] span,
+    header span,
+    button span {
+        font-family: 'Material Symbols Rounded', 'Material Symbols Outlined' !important;
+        font-weight: normal !important;
+        font-style: normal !important;
+        letter-spacing: normal !important;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        direction: ltr !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+
+    /* Clean Streamlit Header Clutter (Removes Deploy button & broken theme switcher menu) */
+    .stAppDeployButton {
+        display: none !important;
+    }
+    #MainMenu {
+        display: none !important;
+    }
+    footer {
+        display: none !important;
+    }
+    header[data-testid="stHeader"] {
+        background: transparent !important;
     }
     
     /* Backgrounds */
@@ -47,53 +80,64 @@ st.markdown("""
     
     /* Global Container Spacing */
     .block-container {
-        padding-top: 2rem !important;
+        padding-top: 1.5rem !important;
         padding-bottom: 3rem !important;
         max-width: 95% !important;
     }
 
-    /* Minimalist Navigation in Sidebar */
-    div[data-testid="stRadio"] > div {
-        gap: 2px !important;
+    /* Minimalist Navigation in Sidebar (SaaS Button Aesthetic) */
+    div[data-testid="stRadio"] [role="radiogroup"] {
+        gap: 4px !important;
+    }
+    /* Completely hide native radio circles */
+    div[data-testid="stRadio"] [data-baseweb="radio"] > div:first-child,
+    div[data-testid="stRadio"] input[type="radio"],
+    div[data-testid="stRadio"] [data-testid="stRadioBtnCircle"],
+    div[data-testid="stRadio"] label > div:first-child {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     div[data-testid="stRadio"] label {
-        background: transparent !important;
-        border: 1px solid transparent !important;
+        background: #111115 !important;
+        border: 1px solid #222227 !important;
         border-radius: 6px !important;
-        padding: 8px 12px !important;
-        margin-bottom: 2px !important;
+        padding: 9px 14px !important;
+        margin-bottom: 3px !important;
         transition: all 0.15s ease !important;
         cursor: pointer !important;
         width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
     }
     div[data-testid="stRadio"] label:hover {
-        background: #121212 !important;
-        border-color: #262626 !important;
+        background: #18181f !important;
+        border-color: #3f3f46 !important;
     }
     div[data-testid="stRadio"] label div[data-testid="stMarkdownContainer"] p {
-        font-size: 0.85rem !important;
+        font-size: 0.84rem !important;
         font-weight: 500 !important;
-        color: #888888 !important;
+        color: #a1a1aa !important;
         margin: 0 !important;
         letter-spacing: -0.01em !important;
     }
     div[data-testid="stRadio"] label:has(input:checked) {
-        background: #171717 !important;
-        border: 1px solid #2e2e2e !important;
+        background: #ffffff !important;
+        border: 1px solid #ffffff !important;
     }
     div[data-testid="stRadio"] label:has(input:checked) div[data-testid="stMarkdownContainer"] p {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-    div[data-testid="stRadio"] label > div:first-child {
-        display: none !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
     }
 
     /* Minimal Header */
     .header-box {
         border-bottom: 1px solid #1a1a1a;
-        padding-bottom: 1.2rem;
-        margin-bottom: 1.8rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
     .header-title {
         font-size: 1.5rem;
@@ -180,7 +224,7 @@ st.markdown("""
     /* Badges */
     .mono-badge {
         display: inline-block;
-        padding: 2px 8px;
+        padding: 3px 9px;
         border: 1px solid #333336;
         background: #141416;
         color: #d4d4d8;
@@ -215,26 +259,37 @@ except Exception:
     kpis = get_executive_kpis()
 
 # ==============================================================================
-# SIDEBAR
+# SIDEBAR NAVIGATION
 # ==============================================================================
+NAV_PAGES = [
+    "Operations Dashboard",
+    "Ticketing Operations",
+    "Transit Corridors",
+    "Passenger Demand",
+    "Fleet Management",
+    "Database & Architecture"
+]
+
+if "nav_radio_selection" not in st.session_state:
+    st.session_state["nav_radio_selection"] = "Operations Dashboard"
+
 with st.sidebar:
     st.markdown("""
-        <div style="padding: 0.8rem 0.2rem 1.2rem 0.2rem; border-bottom: 1px solid #1a1a1a; margin-bottom: 1rem;">
-            <div style="font-size: 0.95rem; font-weight: 700; letter-spacing: 0.12em; color: #ffffff;">TRANSITIQ</div>
-            <div style="font-size: 0.72rem; color: #71717a; margin-top: 2px;">Operations & Analytics Platform</div>
+        <div style="padding: 0.6rem 0.2rem 1rem 0.2rem; border-bottom: 1px solid #1f1f23; margin-bottom: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 26px; height: 26px; background: #ffffff; color: #000000; font-weight: 900; font-size: 11px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">TQ</div>
+                <div>
+                    <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; color: #ffffff;">TRANSITIQ</div>
+                    <div style="font-size: 0.7rem; color: #71717a;">Operations &amp; Analytics</div>
+                </div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
     menu = st.radio(
         "Navigation",
-        [
-            "Overview",
-            "Ticketing Operations",
-            "Transit Corridors",
-            "Passenger Demand",
-            "Fleet Management",
-            "Database & Architecture"
-        ],
+        NAV_PAGES,
+        key="nav_radio_selection",
         label_visibility="collapsed"
     )
 
@@ -248,13 +303,26 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
 
-# Top Header
-st.markdown("""
-    <div class="header-box">
-        <h1 class="header-title">TransitIQ Operations Command</h1>
-        <div class="header-subtitle">Metropolitan Public Transit Network Operations, Capacity Monitoring & Data Analytics</div>
-    </div>
-""", unsafe_allow_html=True)
+# Top Header with dynamic breadcrumb & quick back-to-dashboard button
+col_head1, col_head2 = st.columns([8, 4])
+with col_head1:
+    st.markdown(f"""
+        <div class="header-box">
+            <h1 class="header-title">TransitIQ: {menu}</h1>
+            <div class="header-subtitle">Metropolitan Public Transit Network Operations, Capacity Monitoring & Data Analytics</div>
+        </div>
+    """, unsafe_allow_html=True)
+with col_head2:
+    if menu != "Operations Dashboard":
+        if st.button("Go to Operations Dashboard", use_container_width=True):
+            st.session_state["nav_radio_selection"] = "Operations Dashboard"
+            st.rerun()
+    else:
+        st.markdown("""
+            <div style="text-align: right; padding-top: 0.5rem;">
+                <span class="mono-badge">SYSTEM OPERATIONAL &bull; 160 TRIPS</span>
+            </div>
+        """, unsafe_allow_html=True)
 
 # Helper Function: Generate Clean Monochrome Transit Network Vector Map
 def render_monochrome_network_map():
@@ -336,9 +404,9 @@ def render_monochrome_network_map():
     return fig
 
 # ==============================================================================
-# 1. OVERVIEW
+# 1. OPERATIONS DASHBOARD (MAIN OVERVIEW)
 # ==============================================================================
-if menu == "Overview":
+if menu in ["Operations Dashboard", "Overview"]:
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.metric("Active Corridors", f"{kpis.get('active_routes', 6)} Lines")
