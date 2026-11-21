@@ -1,0 +1,7 @@
+route_id,route_code,route_name,route_type,origin_stop_id,destination_stop_id,distance_km,base_fare,is_active,created_at
+1,M-RED,Red Line Metro Expressway,Metro Rail,1,4,24.5,40,1,2026-11-20 09:16:33
+2,M-BLUE,Blue Line Metro Link,Metro Rail,3,2,32.0,50,1,2026-11-20 09:16:33
+3,BRT-101,North-South Rapid Transit,Rapid Bus,6,7,38.0,30,1,2026-11-20 09:16:33
+4,BRT-102,Heritage to Medical Corridor,Rapid Bus,9,11,16.5,20,1,2026-11-20 09:16:33
+5,EXP-500,Silicon Express Shuttle,Express Shuttle,10,2,18.2,35,1,2026-11-20 09:16:33
+6,CR-10,Regional Commuter Line,Commuter Train,6,1,28.0,25,1,2026-11-20 09:16:33

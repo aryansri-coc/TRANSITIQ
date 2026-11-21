@@ -1,0 +1,17 @@
+vehicle_id,vehicle_code,vehicle_type,capacity,fuel_propulsion,operational_status,commission_date,last_service_date,created_at
+1,METRO-01,Metro Rake,800,Electric,Active,2023-01-15,2026-10-10,2026-11-20 09:16:33
+2,METRO-02,Metro Rake,800,Electric,Active,2023-03-20,2026-10-12,2026-11-20 09:16:33
+3,METRO-03,Metro Rake,800,Electric,Active,2024-05-11,2026-11-01,2026-11-20 09:16:33
+4,METRO-04,Metro Rake,800,Electric,Maintenance,2022-08-01,2026-11-15,2026-11-20 09:16:33
+5,EBUS-101,Electric Bus,75,Electric,Active,2024-02-10,2026-11-05,2026-11-20 09:16:33
+6,EBUS-102,Electric Bus,75,Electric,Active,2024-02-14,2026-11-06,2026-11-20 09:16:33
+7,EBUS-103,Electric Bus,75,Electric,Active,2024-06-22,2026-10-28,2026-11-20 09:16:33
+8,EBUS-104,Electric Bus,75,Electric,Active,2025-01-10,2026-11-08,2026-11-20 09:16:33
+9,CNG-201,CNG Standard Bus,55,CNG,Active,2022-04-12,2026-10-15,2026-11-20 09:16:33
+10,CNG-202,CNG Standard Bus,55,CNG,Active,2022-07-19,2026-10-20,2026-11-20 09:16:33
+11,CNG-203,CNG Standard Bus,55,CNG,Active,2023-09-05,2026-11-02,2026-11-20 09:16:33
+12,CNG-204,CNG Standard Bus,55,CNG,Depot Reserve,2021-11-30,2026-09-15,2026-11-20 09:16:33
+13,DDECK-301,Double Decker Bus,90,Electric,Active,2025-03-15,2026-10-25,2026-11-20 09:16:33
+14,DDECK-302,Double Decker Bus,90,Electric,Active,2025-03-18,2026-11-12,2026-11-20 09:16:33
+15,HYD-401,Electric Bus,65,Hydrogen Cell,Active,2025-08-10,2026-11-04,2026-11-20 09:16:33
+16,COMM-501,Metro Rake,650,Electric,Active,2023-10-15,2026-10-30,2026-11-20 09:16:33
