@@ -1,6 +1,6 @@
 """
 TransitIQ: Public Transit Intelligence & Operations Command Centre
-Modern Enterprise Dashboard (Dark Theme Compatible, Zero Emojis)
+Ultra-Premium SaaS Enterprise UI (Dark Theme, Zero Emojis, Custom Nav Menu)
 Microsoft DP-900 (Azure Data Fundamentals) Capstone Project
 """
 
@@ -37,53 +37,115 @@ st.markdown("""
     
     /* Global Container Adjustments */
     .block-container {
-        padding-top: 1.8rem;
+        padding-top: 1.5rem;
         padding-bottom: 2.5rem;
+        max-width: 96%;
     }
-    
-    /* Top Hero Banner */
+
+    /* Streamlit Sidebar Custom Styling */
+    section[data-testid="stSidebar"] {
+        background-color: #090d16 !important;
+        border-right: 1px solid #1e293b !important;
+    }
+
+    /* Transform Native Radio Buttons into High-End Navigation Menu */
+    div[data-testid="stRadio"] > div {
+        gap: 6px;
+    }
+    div[data-testid="stRadio"] label {
+        background: #0f172a !important;
+        border: 1px solid #1e293b !important;
+        border-radius: 10px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 5px !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    div[data-testid="stRadio"] label:hover {
+        background: #1e293b !important;
+        border-color: #38bdf8 !important;
+        transform: translateX(3px) !important;
+    }
+    div[data-testid="stRadio"] label div[data-testid="stMarkdownContainer"] p {
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
+        color: #94a3b8 !important;
+        margin: 0 !important;
+    }
+    /* Active Navigation State */
+    div[data-testid="stRadio"] label:has(input:checked) {
+        background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%) !important;
+        border-color: #38bdf8 !important;
+        border-left: 4px solid #38bdf8 !important;
+    }
+    div[data-testid="stRadio"] label:has(input:checked) div[data-testid="stMarkdownContainer"] p {
+        color: #38bdf8 !important;
+        font-weight: 700 !important;
+    }
+    /* Hide the default native radio circles */
+    div[data-testid="stRadio"] label > div:first-child {
+        display: none !important;
+    }
+
+    /* Top Hero Header */
     .hero-banner {
-        background: #0f172a;
+        background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
         border: 1px solid #1e293b;
-        border-radius: 14px;
-        padding: 1.4rem 1.8rem;
+        border-radius: 16px;
+        padding: 1.4rem 2rem;
         margin-bottom: 1.6rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
     }
     .hero-title {
-        font-size: 1.85rem;
+        font-size: 1.75rem;
         font-weight: 800;
         letter-spacing: -0.02em;
         color: #f8fafc;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.25rem;
     }
     .hero-subtitle {
-        font-size: 0.92rem;
+        font-size: 0.88rem;
         color: #94a3b8;
-        font-weight: 400;
     }
 
-    /* Badges & Pills (Clean Monochrome & Subtle Tints) */
-    .pill-badge {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 6px;
-        font-size: 0.72rem;
+    /* Form & Console Card Container */
+    .console-card {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 16px;
+        padding: 1.6rem;
+        margin-bottom: 1.4rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .card-title {
+        font-size: 1.15rem;
         font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        color: #f8fafc;
+        margin-bottom: 0.3rem;
+        letter-spacing: -0.01em;
     }
-    .badge-metro { background: #312e81; color: #a5b4fc; border: 1px solid #4338ca; }
-    .badge-bus { background: #0c4a6e; color: #7dd3fc; border: 1px solid #0369a1; }
-    .badge-express { background: #064e3b; color: #6ee7b7; border: 1px solid #047857; }
-    .badge-commuter { background: #451a03; color: #fcd34d; border: 1px solid #b45309; }
-    .badge-active { background: #064e3b; color: #6ee7b7; border: 1px solid #059669; }
+    .card-subtitle {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-bottom: 1.2rem;
+    }
 
-    /* Modern Metric Cards */
+    /* Metric Cards */
     .metric-card {
-        background: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 12px;
-        padding: 1.1rem 1.3rem;
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 14px;
+        padding: 1.2rem 1.4rem;
+        transition: border-color 0.2s ease;
+    }
+    .metric-card:hover {
+        border-color: #38bdf8;
     }
     .metric-label {
         font-size: 0.72rem;
@@ -104,33 +166,80 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Smart Operational Insight Box */
-    .insight-card {
-        background: #0f172a;
-        border: 1px solid #1e293b;
-        border-left: 4px solid #38bdf8;
-        border-radius: 10px;
-        padding: 0.9rem 1.2rem;
-        margin-bottom: 1.4rem;
-        font-size: 0.88rem;
-        color: #cbd5e1;
-        line-height: 1.5;
+    /* Modern Styled Dropdown Labels */
+    label[data-testid="stWidgetLabel"] p {
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
+        color: #cbd5e1 !important;
+        margin-bottom: 4px !important;
+    }
+    
+    /* Streamlit Buttons Styling */
+    div.stButton > button:first-child {
+        background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.65rem 1.4rem !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        letter-spacing: 0.02em !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3) !important;
+    }
+    div.stButton > button:first-child:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45) !important;
     }
 
-    /* Boarding Pass Card */
-    .boarding-pass {
-        background: #1e293b;
-        border: 1px solid #475569;
+    /* Pill Badges */
+    .pill-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .badge-metro { background: #312e81; color: #a5b4fc; border: 1px solid #4338ca; }
+    .badge-bus { background: #0c4a6e; color: #7dd3fc; border: 1px solid #0369a1; }
+    .badge-express { background: #064e3b; color: #6ee7b7; border: 1px solid #047857; }
+    .badge-commuter { background: #451a03; color: #fcd34d; border: 1px solid #b45309; }
+    .badge-active { background: #064e3b; color: #6ee7b7; border: 1px solid #059669; }
+
+    /* Live Ticket Pre-booking Card */
+    .receipt-card {
+        background: #090d16;
+        border: 1px solid #1e293b;
         border-radius: 14px;
-        padding: 1.5rem;
-        max-width: 560px;
-        margin: 1rem auto;
+        padding: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    .receipt-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #1e293b;
+        font-size: 0.85rem;
+    }
+    .receipt-label { color: #94a3b8; font-weight: 500; }
+    .receipt-value { color: #f8fafc; font-weight: 700; }
+    
+    /* Digital Boarding Pass */
+    .boarding-pass {
+        background: #0b1120;
+        border: 1px solid #334155;
+        border-radius: 16px;
+        padding: 1.6rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
     .pass-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid #1e293b;
         padding-bottom: 0.8rem;
         margin-bottom: 1rem;
     }
@@ -142,47 +251,26 @@ st.markdown("""
         text-align: center;
     }
     .pass-station {
-        font-size: 1.15rem;
-        font-weight: 700;
+        font-size: 1.2rem;
+        font-weight: 800;
         color: #f8fafc;
     }
     .pass-arrow {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         color: #38bdf8;
     }
     .pass-details {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0.8rem;
-        background: #0f172a;
-        padding: 0.8rem;
-        border-radius: 8px;
+        background: #060911;
+        padding: 0.9rem;
+        border-radius: 10px;
         text-align: center;
-        border: 1px solid #334155;
+        border: 1px solid #1e293b;
     }
     .pass-label { font-size: 0.7rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
-    .pass-val { font-size: 0.92rem; font-weight: 700; color: #f8fafc; }
-    
-    /* Station Stepper Timeline */
-    .station-stepper {
-        display: flex;
-        align-items: center;
-        overflow-x: auto;
-        padding: 0.8rem 0;
-        gap: 0.6rem;
-    }
-    .step-node {
-        background: #1e293b;
-        border: 1px solid #38bdf8;
-        border-radius: 10px;
-        padding: 0.65rem 0.95rem;
-        min-width: 150px;
-        text-align: center;
-    }
-    .step-seq { font-size: 0.68rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.05em; }
-    .step-name { font-size: 0.88rem; font-weight: 700; color: #f8fafc; margin-top: 3px; }
-    .step-meta { font-size: 0.72rem; color: #94a3b8; margin-top: 3px; }
-    .step-arrow { color: #64748b; font-size: 1.1rem; font-weight: 700; }
+    .pass-val { font-size: 0.95rem; font-weight: 700; color: #f8fafc; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -209,56 +297,69 @@ except Exception:
     kpis = get_executive_kpis()
 
 # ==============================================================================
-# SIDEBAR
+# SIDEBAR NAVIGATION
 # ==============================================================================
 with st.sidebar:
     st.markdown("""
-        <div style="padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid #334155;">
-            <div style="font-size: 1.35rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.01em;">TransitIQ</div>
-            <div style="font-size: 0.8rem; color: #94a3b8;">Urban Mobility Command Centre</div>
+        <div style="padding: 0.5rem 0.2rem 1rem 0.2rem; border-bottom: 1px solid #1e293b; margin-bottom: 1.2rem;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: white;">
+                    TQ
+                </div>
+                <div>
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em;">TransitIQ</div>
+                    <div style="font-size: 0.74rem; color: #64748b; font-weight: 600;">Urban Mobility Command</div>
+                </div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
-    st.markdown(f"""
-        <div style="background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 8px; font-size: 0.76rem; color: #38bdf8; font-weight: 600; margin-bottom: 1.2rem;">
-            ENGINE: {DB_DIALECT.upper()} MODE &nbsp;|&nbsp; DP-900 CAPSTONE
+    st.markdown("""
+        <div style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+            Operations Consoles
         </div>
     """, unsafe_allow_html=True)
 
     menu = st.radio(
-        "Navigation",
+        "Navigation Menu",
         [
-            "Overview",
-            "Corridors & Network",
-            "Ridership & Demand",
+            "Network Overview",
             "Ticketing Operations",
+            "Corridors & Stops",
+            "Passenger Demand",
             "Fleet & Dispatch",
-            "Technical Architecture"
+            "Technical Lab"
         ],
         label_visibility="collapsed"
     )
 
-    st.markdown("---")
-    st.markdown("""
-    <div style="font-size: 0.78rem; color: #64748b; line-height: 1.6;">
-        <b>Technical Architecture:</b><br>
-        • Database: Third Normal Form (3NF)<br>
-        • Workloads: OLTP & OLAP Dual-Mode<br>
-        • Cloud Alignment: Azure SQL & Blob
-    </div>
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 1rem; margin-top: 1rem;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                <span style="font-size: 0.75rem; font-weight: 700; color: #10b981; text-transform: uppercase;">System Operational</span>
+            </div>
+            <div style="font-size: 0.78rem; color: #cbd5e1; font-weight: 600;">Engine: {DB_DIALECT.upper()} Mode</div>
+            <div style="font-size: 0.72rem; color: #64748b; margin-top: 3px;">Microsoft DP-900 Relational Baseline</div>
+        </div>
     """, unsafe_allow_html=True)
 
-# Top Hero Banner
-st.markdown("""
+# Top Hero Header
+st.markdown(f"""
     <div class="hero-banner">
-        <div class="hero-title">TransitIQ Operations Command</div>
-        <div class="hero-subtitle">
-            Metropolitan Transit Network Operations, Capacity Monitoring & Data Platform
+        <div>
+            <div class="hero-title">TransitIQ Operations Command</div>
+            <div class="hero-subtitle">Metropolitan Transit Network Operations, Capacity Monitoring & Relational Data Platform</div>
+        </div>
+        <div style="text-align: right;">
+            <span class="pill-badge badge-active">Live System</span>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">6 Lines • 16 Assets • 160 Trips</div>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Helper Function: Generate Offline Interactive Transit Network Map
+# Helper Function: Render Offline Interactive Transit Network Map
 def render_transit_network_map():
     segments = execute_query("""
         SELECT 
@@ -275,21 +376,19 @@ def render_transit_network_map():
         JOIN stops s ON rs.stop_id = s.stop_id
         ORDER BY rs.route_id, rs.stop_sequence ASC
     """)
-    
     stop_stats = get_stop_demand_df()
 
     fig = go.Figure()
     
     route_colors = {
-        "M-RED": "#ef4444",    # Red
-        "M-BLUE": "#3b82f6",   # Blue
-        "BRT-101": "#06b6d4",  # Cyan
-        "BRT-102": "#14b8a6",  # Teal
-        "EXP-500": "#10b981",  # Emerald
-        "CR-10": "#f59e0b"     # Amber
+        "M-RED": "#ef4444",
+        "M-BLUE": "#3b82f6",
+        "BRT-101": "#06b6d4",
+        "BRT-102": "#14b8a6",
+        "EXP-500": "#10b981",
+        "CR-10": "#f59e0b"
     }
 
-    # Draw Route Vectors (Lines)
     routes_grouped = {}
     for seg in segments:
         code = seg["route_code"]
@@ -309,7 +408,6 @@ def render_transit_network_map():
             hoverinfo="name"
         ))
 
-    # Draw Stations (Nodes)
     fig.add_trace(go.Scatter(
         x=stop_stats["longitude"],
         y=stop_stats["latitude"],
@@ -319,7 +417,7 @@ def render_transit_network_map():
         textposition="top center",
         textfont=dict(color="#f8fafc", size=9),
         marker=dict(
-            size=stop_stats["total_footfall"].apply(lambda x: min(22, max(8, x / 12))),
+            size=stop_stats["total_footfall"].apply(lambda x: min(20, max(8, x / 12))),
             color="#38bdf8",
             line=dict(width=1.5, color="#f8fafc"),
             opacity=0.95
@@ -330,40 +428,20 @@ def render_transit_network_map():
 
     fig.update_layout(
         template="plotly_dark",
-        paper_bgcolor="#0f172a",
-        plot_bgcolor="#0f172a",
+        paper_bgcolor="#090d16",
+        plot_bgcolor="#090d16",
         margin=dict(l=15, r=15, t=15, b=15),
-        height=400,
-        xaxis=dict(
-            title="Longitude (°E)",
-            showgrid=True,
-            gridcolor="#1e293b",
-            zeroline=False,
-            color="#94a3b8"
-        ),
-        yaxis=dict(
-            title="Latitude (°N)",
-            showgrid=True,
-            gridcolor="#1e293b",
-            zeroline=False,
-            color="#94a3b8"
-        ),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1,
-            font=dict(size=9, color="#cbd5e1")
-        )
+        height=380,
+        xaxis=dict(title="Longitude (°E)", showgrid=True, gridcolor="#1e293b", zeroline=False, color="#94a3b8"),
+        yaxis=dict(title="Latitude (°N)", showgrid=True, gridcolor="#1e293b", zeroline=False, color="#94a3b8"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(size=9, color="#cbd5e1"))
     )
     return fig
 
 # ==============================================================================
-# 1. OVERVIEW
+# 1. NETWORK OVERVIEW
 # ==============================================================================
-if menu == "Overview":
-    # 4 Clean Metric Cards
+if menu == "Network Overview":
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.markdown(f"""
@@ -378,7 +456,7 @@ if menu == "Overview":
             <div class="metric-card">
                 <div class="metric-label">On-Time Performance</div>
                 <div class="metric-value">{kpis.get('on_time_performance_pct', 94.0)}%</div>
-                <div class="metric-delta">Benchmark Target: >90%</div>
+                <div class="metric-delta">Target Benchmark: >90%</div>
             </div>
         """, unsafe_allow_html=True)
     with c3:
@@ -386,7 +464,7 @@ if menu == "Overview":
             <div class="metric-card">
                 <div class="metric-label">Total Ridership</div>
                 <div class="metric-value">{kpis.get('total_passengers', 2200):,}</div>
-                <div class="metric-delta">160 Scheduled Trips</div>
+                <div class="metric-delta">Across 160 Scheduled Trips</div>
             </div>
         """, unsafe_allow_html=True)
     with c4:
@@ -394,34 +472,29 @@ if menu == "Overview":
             <div class="metric-card">
                 <div class="metric-label">Gross Revenue</div>
                 <div class="metric-value">₹{kpis.get('total_revenue', 0.0):,.0f}</div>
-                <div class="metric-delta">Electronic Fare Collection</div>
+                <div class="metric-delta">Cashless Fare Collections</div>
             </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("""
-        <div class="insight-card">
-            <b>Operational Summary:</b> Network punctuality is performing at <b>94.2%</b> with an average delay of <b>1.8 minutes</b> across corridors. 
-            Highest passenger throughput is concentrated on the <b>Red Line Metro</b> and <b>Silicon Express Shuttle</b>. 
-            Digital smartcard and mobile QR transactions represent over <b>80%</b> of total fare collections.
-        </div>
-    """, unsafe_allow_html=True)
-
-    # 2 Column View: Transit Map + Route Revenue Leaderboard
     col_map, col_chart = st.columns([6, 5])
-    
     with col_map:
-        st.subheader("Transit Network Topological Map")
-        st.caption("Multimodal route alignments and station hubs sized by passenger footfall.")
-        fig_net = render_transit_network_map()
-        st.plotly_chart(fig_net, use_container_width=True)
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Topological Transit Line Map</div>
+                <div class="card-subtitle">Network alignment vector routes and station hubs sized by crowd footfall</div>
+        """, unsafe_allow_html=True)
+        st.plotly_chart(render_transit_network_map(), use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with col_chart:
-        st.subheader("Route Revenue Performance")
-        st.caption("Gross fare revenue generated per transit corridor.")
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Corridor Revenue Leaderboard</div>
+                <div class="card-subtitle">Gross fare collection across active transit lines</div>
+        """, unsafe_allow_html=True)
         route_df = get_route_performance_df()
-        
         fig_rev = px.bar(
             route_df,
             x="total_revenue",
@@ -435,33 +508,34 @@ if menu == "Overview":
                 "Commuter Train": "#fbbf24"
             },
             template="plotly_dark",
-            height=400
+            height=380
         )
         fig_rev.update_layout(
-            paper_bgcolor="#0f172a",
-            plot_bgcolor="#0f172a",
+            paper_bgcolor="#090d16",
+            plot_bgcolor="#090d16",
             xaxis=dict(title="Revenue (₹)", showgrid=True, gridcolor="#1e293b"),
             yaxis=dict(title="", showgrid=False),
             margin=dict(l=10, r=10, t=10, b=10),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(size=9))
         )
         st.plotly_chart(fig_rev, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    # Clean Route Status Cards
-    st.markdown("### Corridor Fleet & Capacity Status")
+    # Clean Corridor Cards
+    st.markdown("### Corridor Fleet & Operational Readiness")
     cols = st.columns(3)
     for idx, row in route_df.iterrows():
         c = cols[idx % 3]
         badge_class = "badge-metro" if "Metro" in row["route_type"] else ("badge-bus" if "Bus" in row["route_type"] else "badge-express")
         with c:
             st.markdown(f"""
-                <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.1rem; margin-bottom: 1rem;">
+                <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 1.1rem; margin-bottom: 1rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span class="pill-badge {badge_class}">{row['route_code']}</span>
-                        <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">{row['distance_km']} km</span>
+                        <span style="font-size: 0.78rem; color: #94a3b8; font-weight: 600;">{row['distance_km']} km</span>
                     </div>
-                    <div style="font-size: 1rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.4rem;">{row['route_name']}</div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.82rem; color: #94a3b8; border-top: 1px solid #334155; padding-top: 0.5rem; margin-top: 0.5rem;">
+                    <div style="font-size: 0.98rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.4rem;">{row['route_name']}</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 0.5rem; margin-top: 0.5rem;">
                         <span>{row['total_passengers']:,} riders</span>
                         <span style="color: #38bdf8; font-weight: 600;">{row['on_time_percentage']}% on-time</span>
                     </div>
@@ -469,219 +543,117 @@ if menu == "Overview":
             """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 2. CORRIDORS & NETWORK
-# ==============================================================================
-elif menu == "Corridors & Network":
-    st.subheader("Transit Corridor & Station Inspector")
-    st.write("Inspect sequential station stops, inter-station distances, estimated travel times, and accessibility infrastructure.")
-
-    routes = execute_query("SELECT route_id, route_code, route_name, route_type, distance_km, base_fare FROM routes ORDER BY route_id")
-    route_choices = {f"{r['route_code']} - {r['route_name']} ({r['route_type']})": r for r in routes}
-    
-    selected_name = st.selectbox("Select Corridor:", list(route_choices.keys()))
-    sel_route = route_choices[selected_name]
-
-    # Metric Row
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        st.metric("Mode of Transit", sel_route["route_type"])
-    with c2:
-        st.metric("Corridor Length", f"{sel_route['distance_km']} km")
-    with c3:
-        st.metric("Base Fare", f"₹{sel_route['base_fare']:.2f}")
-    with c4:
-        st.metric("Operational Status", "Active Service")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("#### Sequential Station Alignment (Stop by Stop)")
-
-    segments = execute_query("""
-        SELECT 
-            rs.stop_sequence,
-            s.stop_name,
-            s.stop_code,
-            s.zone_id,
-            s.wheelchair_accessible,
-            rs.distance_from_start_km,
-            rs.est_travel_time_min
-        FROM route_segments rs
-        JOIN stops s ON rs.stop_id = s.stop_id
-        WHERE rs.route_id = :rid
-        ORDER BY rs.stop_sequence ASC
-    """, {"rid": sel_route["route_id"]})
-
-    # Visual Stepper
-    stepper_html = '<div class="station-stepper">'
-    for i, s in enumerate(segments):
-        stepper_html += f"""
-            <div class="step-node">
-                <div class="step-seq">STOP {s['stop_sequence']:02d}</div>
-                <div class="step-name">{s['stop_name']}</div>
-                <div class="step-meta">{s['distance_from_start_km']} km | ~{s['est_travel_time_min']} min</div>
-            </div>
-        """
-        if i < len(segments) - 1:
-            stepper_html += '<div class="step-arrow">➔</div>'
-    stepper_html += '</div>'
-    
-    st.markdown(stepper_html, unsafe_allow_html=True)
-
-    st.markdown("#### Station Facility Details")
-    df_seg = pd.DataFrame(segments)
-    df_seg["Accessibility"] = df_seg["wheelchair_accessible"].apply(lambda x: "Elevator & Tactile Paving" if x else "Standard Stairs")
-    st.dataframe(
-        df_seg[["stop_sequence", "stop_name", "zone_id", "distance_from_start_km", "est_travel_time_min", "Accessibility"]].rename(columns={
-            "stop_sequence": "Seq",
-            "stop_name": "Station Name",
-            "zone_id": "Fare Zone",
-            "distance_from_start_km": "Distance (km)",
-            "est_travel_time_min": "Travel Time (min)"
-        }),
-        use_container_width=True,
-        hide_index=True
-    )
-
-# ==============================================================================
-# 3. RIDERSHIP & DEMAND
-# ==============================================================================
-elif menu == "Ridership & Demand":
-    st.subheader("Passenger Demand & Temporal Ridership Patterns")
-    st.write("Analysis of passenger load distribution across 24-hour operational periods and payment preferences.")
-
-    hourly_df = get_hourly_ridership_df()
-    payment_df = get_payment_breakdown()
-
-    col_rush, col_pie = st.columns([7, 4])
-    
-    with col_rush:
-        st.markdown("#### Hourly Passenger Volume (24-Hour Cycle)")
-        st.caption("Highlighted areas indicate peak morning (08:00–10:00) and evening (17:00–19:00) travel periods.")
-        
-        fig_rush = px.area(
-            hourly_df,
-            x="hour_of_day",
-            y="passenger_count",
-            color="route_type",
-            labels={"hour_of_day": "Hour of Day", "passenger_count": "Boardings"},
-            color_discrete_map={
-                "Metro Rail": "#818cf8",
-                "Rapid Bus": "#38bdf8",
-                "Express Shuttle": "#34d399",
-                "Commuter Train": "#fbbf24"
-            },
-            template="plotly_dark",
-            height=370
-        )
-        fig_rush.update_layout(
-            paper_bgcolor="#0f172a",
-            plot_bgcolor="#0f172a",
-            xaxis=dict(showgrid=True, gridcolor="#1e293b"),
-            yaxis=dict(showgrid=True, gridcolor="#1e293b")
-        )
-        fig_rush.add_vrect(x0="08", x1="10", fillcolor="#38bdf8", opacity=0.15, line_width=0, annotation_text="Morning Peak", annotation_position="top left")
-        fig_rush.add_vrect(x0="17", x1="19", fillcolor="#fbbf24", opacity=0.15, line_width=0, annotation_text="Evening Peak", annotation_position="top left")
-        st.plotly_chart(fig_rush, use_container_width=True)
-
-    with col_pie:
-        st.markdown("#### Payment Method Distribution")
-        st.caption("Ridership share across fare collection channels.")
-        pay_totals = payment_df.groupby("payment_method")["transaction_count"].sum().reset_index()
-        fig_pay = px.pie(
-            pay_totals,
-            names="payment_method",
-            values="transaction_count",
-            hole=0.45,
-            template="plotly_dark",
-            color_discrete_sequence=["#38bdf8", "#818cf8", "#34d399", "#fbbf24"],
-            height=370
-        )
-        fig_pay.update_layout(paper_bgcolor="#0f172a", plot_bgcolor="#0f172a")
-        fig_pay.update_traces(textposition='inside', textinfo='percent+label')
-        st.plotly_chart(fig_pay, use_container_width=True)
-
-    st.markdown("---")
-    
-    col_demo, col_busiest = st.columns(2)
-    with col_demo:
-        st.markdown("#### Passenger Demographics")
-        demo_totals = payment_df.groupby("passenger_type")["transaction_count"].sum().reset_index()
-        fig_demo = px.bar(
-            demo_totals,
-            x="passenger_type",
-            y="transaction_count",
-            color="passenger_type",
-            template="plotly_dark",
-            labels={"passenger_type": "Category", "transaction_count": "Transactions"},
-            height=300
-        )
-        fig_demo.update_layout(paper_bgcolor="#0f172a", plot_bgcolor="#0f172a", showlegend=False)
-        st.plotly_chart(fig_demo, use_container_width=True)
-
-    with col_busiest:
-        st.markdown("#### Top 5 Station Hubs by Footfall")
-        stop_df = get_stop_demand_df().head(5)
-        fig_stops = px.bar(
-            stop_df,
-            x="stop_name",
-            y="total_footfall",
-            color="total_footfall",
-            template="plotly_dark",
-            color_continuous_scale="Blues",
-            labels={"stop_name": "Station", "total_footfall": "Footfall"},
-            height=300
-        )
-        fig_stops.update_layout(paper_bgcolor="#0f172a", plot_bgcolor="#0f172a", coloraxis_showscale=False)
-        st.plotly_chart(fig_stops, use_container_width=True)
-
-# ==============================================================================
-# 4. TICKETING OPERATIONS
+# 2. TICKETING OPERATIONS (HIGH-END REDESIGNED KIOSK)
 # ==============================================================================
 elif menu == "Ticketing Operations":
-    st.subheader("Passenger Ticketing & Reservation Console")
-    st.write("Demonstration of real-time atomic transaction issuance with dynamic concession calculation.")
-
     bookable = TransitService.get_bookable_trips()
     
     if not bookable:
         st.warning("No scheduled trips currently available for ticketing.")
     else:
         trip_map = {
-            f"[{t['trip_code']}] {t['route_name']} ({t['vehicle_code']}) - Scheduled: {t['scheduled_departure']}": t
+            f"[{t['trip_code']}] {t['route_name']} ({t['vehicle_code']}) - Dep: {t['scheduled_departure']}": t
             for t in bookable
         }
-        selected_trip_label = st.selectbox("1. Select Scheduled Trip:", list(trip_map.keys()))
-        trip_data = trip_map[selected_trip_label]
-        
-        trip_stops = TransitService.get_stops_for_trip(trip_data["trip_id"])
-        
-        c_orig, c_dest = st.columns(2)
-        with c_orig:
-            orig_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[:-1]}
-            sel_orig_label = st.selectbox("2. Boarding Station (Origin):", list(orig_opts.keys()))
-            sel_orig_id = orig_opts[sel_orig_label]
 
-        with c_dest:
-            dest_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[1:]}
-            sel_dest_label = st.selectbox("3. Alighting Station (Destination):", list(dest_opts.keys()))
-            sel_dest_id = dest_opts[sel_dest_label]
+        col_form, col_preview = st.columns([6, 4])
 
-        c_pass, c_pay = st.columns(2)
-        with c_pass:
-            passenger_cat = st.selectbox(
-                "4. Passenger Classification:",
-                ["Standard Adult (Full Fare)", "Student (50% Concession)", "Senior Citizen (60% Concession)", "Commuter Passholder (30% Concession)"]
-            )
-            cat_clean = passenger_cat.split(" (")[0]
+        with col_form:
+            st.markdown("""
+                <div class="console-card">
+                    <div class="card-title">Ticketing & Reservation Terminal</div>
+                    <div class="card-subtitle">ACID Transaction Engine • Concession Discount Calculation • Immediate Inventory Commit</div>
+            """, unsafe_allow_html=True)
 
-        with c_pay:
-            pay_method = st.selectbox(
-                "5. Payment Channel:",
-                ["Transit Smartcard", "Mobile QR / UPI", "Contactless EMV", "Ticket Counter"]
-            )
+            selected_trip_label = st.selectbox("1. Active Transit Trip & Scheduled Departure:", list(trip_map.keys()))
+            trip_data = trip_map[selected_trip_label]
+            trip_stops = TransitService.get_stops_for_trip(trip_data["trip_id"])
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        if st.button("Issue Electronic Ticket (ACID Transaction)", type="primary"):
+            c_orig, c_dest = st.columns(2)
+            with c_orig:
+                orig_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[:-1]}
+                sel_orig_label = st.selectbox("2. Boarding Station (Origin):", list(orig_opts.keys()))
+                sel_orig_id = orig_opts[sel_orig_label]
+
+            with c_dest:
+                dest_opts = {f"{s['stop_sequence']:02d}. {s['stop_name']}": s['stop_id'] for s in trip_stops[1:]}
+                sel_dest_label = st.selectbox("3. Alighting Station (Destination):", list(dest_opts.keys()))
+                sel_dest_id = dest_opts[sel_dest_label]
+
+            c_pass, c_pay = st.columns(2)
+            with c_pass:
+                passenger_cat = st.selectbox(
+                    "4. Passenger Classification & Concession:",
+                    ["Standard Adult (Full Fare)", "Student (50% Concession)", "Senior Citizen (60% Concession)", "Commuter Passholder (30% Concession)"]
+                )
+                cat_clean = passenger_cat.split(" (")[0]
+
+            with c_pay:
+                pay_method = st.selectbox(
+                    "5. Payment Channel:",
+                    ["Transit Smartcard", "Mobile QR / UPI", "Contactless EMV", "Ticket Counter"]
+                )
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            book_clicked = st.button("Confirm & Issue Electronic Ticket", use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # Dynamic Pre-Booking Receipt Calculation
+        base_fare = trip_data["base_fare"]
+        discount_map = {"Standard Adult": 1.0, "Student": 0.50, "Senior Citizen": 0.40, "Commuter Passholder": 0.70}
+        discount_rate = discount_map.get(cat_clean, 1.0)
+        final_fare = round(base_fare * discount_rate, 2)
+        discount_amt = round(base_fare - final_fare, 2)
+        occupancy_pct = min(100.0, round((trip_data["booked_passengers"] / trip_data["capacity"]) * 100, 1))
+
+        with col_preview:
+            st.markdown("""
+                <div class="console-card">
+                    <div class="card-title">Fare & Inventory Summary</div>
+                    <div class="card-subtitle">Real-time capacity tracking & fare computation</div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"""
+                <div class="receipt-card">
+                    <div class="receipt-row">
+                        <span class="receipt-label">Route Line</span>
+                        <span class="receipt-value">{trip_data['route_name']}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Vehicle Assigned</span>
+                        <span class="receipt-value">{trip_data['vehicle_code']}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Trip Code</span>
+                        <span class="receipt-value">{trip_data['trip_code']}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Seat Availability</span>
+                        <span class="receipt-value">{trip_data['booked_passengers']} / {trip_data['capacity']} booked ({occupancy_pct}%)</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Base Adult Fare</span>
+                        <span class="receipt-value">₹{base_fare:.2f}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Concession Discount</span>
+                        <span class="receipt-value" style="color: #38bdf8;">-₹{discount_amt:.2f}</span>
+                    </div>
+                    <div class="receipt-row" style="border-bottom: none; padding-top: 0.8rem;">
+                        <span style="font-size: 1rem; font-weight: 700; color: #f8fafc;">Total Payable</span>
+                        <span style="font-size: 1.35rem; font-weight: 800; color: #34d399;">₹{final_fare:.2f}</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+
+            # Capacity Progress Bar
+            st.caption("Vehicle Capacity Utilization")
+            st.progress(occupancy_pct / 100.0)
+
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # Handle Booking Submission
+        if book_clicked:
             res = TransitService.book_ticket(
                 trip_id=trip_data["trip_id"],
                 origin_stop_id=sel_orig_id,
@@ -691,8 +663,7 @@ elif menu == "Ticketing Operations":
             )
             
             if res["success"]:
-                st.success("Transaction committed successfully to relational database.")
-                
+                st.success("Transaction committed successfully to relational database under ACID protocol.")
                 orig_name = sel_orig_label.split(". ")[1]
                 dest_name = sel_dest_label.split(". ")[1]
                 
@@ -735,7 +706,7 @@ elif menu == "Ticketing Operations":
                             </div>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px dashed #475569; padding-top: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px dashed #334155; padding-top: 0.8rem;">
                             <span style="font-size: 0.74rem; color: #94a3b8;">Channel: <b>{res['payment_method']}</b></span>
                             <span style="font-family: monospace; font-size: 0.95rem; letter-spacing: 2px; color: #64748b;">||| | |||| | ||| ||</span>
                         </div>
@@ -745,31 +716,217 @@ elif menu == "Ticketing Operations":
                 st.error(f"Transaction Rejected: {res['message']}")
 
 # ==============================================================================
+# 3. CORRIDORS & STOPS
+# ==============================================================================
+elif menu == "Corridors & Stops":
+    st.markdown("""
+        <div class="console-card">
+            <div class="card-title">Transit Corridor Alignment & Station Inspector</div>
+            <div class="card-subtitle">Sequential station alignments, inter-station distances, estimated travel times, and accessibility infrastructure</div>
+    """, unsafe_allow_html=True)
+
+    routes = execute_query("SELECT route_id, route_code, route_name, route_type, distance_km, base_fare FROM routes ORDER BY route_id")
+    route_choices = {f"{r['route_code']} - {r['route_name']} ({r['route_type']})": r for r in routes}
+    
+    selected_name = st.selectbox("Select Corridor:", list(route_choices.keys()))
+    sel_route = route_choices[selected_name]
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.metric("Mode of Transit", sel_route["route_type"])
+    with c2:
+        st.metric("Corridor Length", f"{sel_route['distance_km']} km")
+    with c3:
+        st.metric("Base Fare", f"₹{sel_route['base_fare']:.2f}")
+    with c4:
+        st.metric("Operational Status", "Active Service")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("#### Sequential Station Alignment (Stop by Stop)")
+
+    segments = execute_query("""
+        SELECT 
+            rs.stop_sequence,
+            s.stop_name,
+            s.stop_code,
+            s.zone_id,
+            s.wheelchair_accessible,
+            rs.distance_from_start_km,
+            rs.est_travel_time_min
+        FROM route_segments rs
+        JOIN stops s ON rs.stop_id = s.stop_id
+        WHERE rs.route_id = :rid
+        ORDER BY rs.stop_sequence ASC
+    """, {"rid": sel_route["route_id"]})
+
+    # Visual Stepper
+    stepper_html = '<div class="station-stepper" style="display: flex; overflow-x: auto; gap: 8px; padding: 12px 0;">'
+    for i, s in enumerate(segments):
+        stepper_html += f"""
+            <div style="background: #090d16; border: 1px solid #1e293b; border-radius: 10px; padding: 10px 14px; min-width: 150px; text-align: center;">
+                <div style="font-size: 0.68rem; font-weight: 800; color: #38bdf8;">STOP {s['stop_sequence']:02d}</div>
+                <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc; margin-top: 3px;">{s['stop_name']}</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 3px;">{s['distance_from_start_km']} km | ~{s['est_travel_time_min']} min</div>
+            </div>
+        """
+        if i < len(segments) - 1:
+            stepper_html += '<div style="color: #64748b; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center;">➔</div>'
+    stepper_html += '</div>'
+    st.markdown(stepper_html, unsafe_allow_html=True)
+
+    df_seg = pd.DataFrame(segments)
+    df_seg["Accessibility"] = df_seg["wheelchair_accessible"].apply(lambda x: "Elevator & Tactile Paving" if x else "Standard Stairs")
+    st.dataframe(
+        df_seg[["stop_sequence", "stop_name", "zone_id", "distance_from_start_km", "est_travel_time_min", "Accessibility"]].rename(columns={
+            "stop_sequence": "Seq",
+            "stop_name": "Station Name",
+            "zone_id": "Fare Zone",
+            "distance_from_start_km": "Distance (km)",
+            "est_travel_time_min": "Travel Time (min)"
+        }),
+        use_container_width=True,
+        hide_index=True
+    )
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# ==============================================================================
+# 4. PASSENGER DEMAND
+# ==============================================================================
+elif menu == "Passenger Demand":
+    hourly_df = get_hourly_ridership_df()
+    payment_df = get_payment_breakdown()
+
+    col_rush, col_pie = st.columns([7, 4])
+    
+    with col_rush:
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Hourly Passenger Volume (24-Hour Operational Cycle)</div>
+                <div class="card-subtitle">Shaded regions highlight peak morning (08:00–10:00) and evening (17:00–19:00) crowding</div>
+        """, unsafe_allow_html=True)
+        fig_rush = px.area(
+            hourly_df,
+            x="hour_of_day",
+            y="passenger_count",
+            color="route_type",
+            labels={"hour_of_day": "Hour of Day", "passenger_count": "Boardings"},
+            color_discrete_map={
+                "Metro Rail": "#818cf8",
+                "Rapid Bus": "#38bdf8",
+                "Express Shuttle": "#34d399",
+                "Commuter Train": "#fbbf24"
+            },
+            template="plotly_dark",
+            height=360
+        )
+        fig_rush.update_layout(
+            paper_bgcolor="#090d16",
+            plot_bgcolor="#090d16",
+            xaxis=dict(showgrid=True, gridcolor="#1e293b"),
+            yaxis=dict(showgrid=True, gridcolor="#1e293b")
+        )
+        fig_rush.add_vrect(x0="08", x1="10", fillcolor="#38bdf8", opacity=0.15, line_width=0, annotation_text="Morning Peak", annotation_position="top left")
+        fig_rush.add_vrect(x0="17", x1="19", fillcolor="#fbbf24", opacity=0.15, line_width=0, annotation_text="Evening Peak", annotation_position="top left")
+        st.plotly_chart(fig_rush, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with col_pie:
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Fare Collection Channels</div>
+                <div class="card-subtitle">Ridership share across ticketing methods</div>
+        """, unsafe_allow_html=True)
+        pay_totals = payment_df.groupby("payment_method")["transaction_count"].sum().reset_index()
+        fig_pay = px.pie(
+            pay_totals,
+            names="payment_method",
+            values="transaction_count",
+            hole=0.45,
+            template="plotly_dark",
+            color_discrete_sequence=["#38bdf8", "#818cf8", "#34d399", "#fbbf24"],
+            height=360
+        )
+        fig_pay.update_layout(paper_bgcolor="#090d16", plot_bgcolor="#090d16")
+        fig_pay.update_traces(textposition='inside', textinfo='percent+label')
+        st.plotly_chart(fig_pay, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("---")
+    
+    col_demo, col_busiest = st.columns(2)
+    with col_demo:
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Passenger Demographics</div>
+                <div class="card-subtitle">Volume of tickets issued across concession classifications</div>
+        """, unsafe_allow_html=True)
+        demo_totals = payment_df.groupby("passenger_type")["transaction_count"].sum().reset_index()
+        fig_demo = px.bar(
+            demo_totals,
+            x="passenger_type",
+            y="transaction_count",
+            color="passenger_type",
+            template="plotly_dark",
+            labels={"passenger_type": "Category", "transaction_count": "Transactions"},
+            height=280
+        )
+        fig_demo.update_layout(paper_bgcolor="#090d16", plot_bgcolor="#090d16", showlegend=False)
+        st.plotly_chart(fig_demo, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with col_busiest:
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Top 5 Station Hubs by Footfall</div>
+                <div class="card-subtitle">Highest passenger boarding and transfer hubs</div>
+        """, unsafe_allow_html=True)
+        stop_df = get_stop_demand_df().head(5)
+        fig_stops = px.bar(
+            stop_df,
+            x="stop_name",
+            y="total_footfall",
+            color="total_footfall",
+            template="plotly_dark",
+            color_continuous_scale="Blues",
+            labels={"stop_name": "Station", "total_footfall": "Footfall"},
+            height=280
+        )
+        fig_stops.update_layout(paper_bgcolor="#090d16", plot_bgcolor="#090d16", coloraxis_showscale=False)
+        st.plotly_chart(fig_stops, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+# ==============================================================================
 # 5. FLEET & DISPATCH
 # ==============================================================================
 elif menu == "Fleet & Dispatch":
-    st.subheader("Fleet Assets & Real-Time Dispatch Management")
-    st.write("Vehicle propulsion distribution, capacity utilization, and operational schedule management.")
-
     fleet_df = get_fleet_utilization_df()
     delay_df = get_delay_monitoring_df()
 
     col_f1, col_f2 = st.columns([6, 5])
     with col_f1:
-        st.markdown("#### Vehicle Fleet Propulsion")
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Vehicle Fleet Propulsion</div>
+                <div class="card-subtitle">Share of clean energy rolling stock across lines</div>
+        """, unsafe_allow_html=True)
         fig_fuel = px.pie(
             fleet_df,
             names="fuel_propulsion",
             hole=0.45,
             template="plotly_dark",
             color_discrete_sequence=["#34d399", "#38bdf8", "#fbbf24", "#818cf8"],
-            height=320
+            height=300
         )
-        fig_fuel.update_layout(paper_bgcolor="#0f172a", plot_bgcolor="#0f172a")
+        fig_fuel.update_layout(paper_bgcolor="#090d16", plot_bgcolor="#090d16")
         st.plotly_chart(fig_fuel, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with col_f2:
-        st.markdown("#### Punctuality Classification")
+        st.markdown("""
+            <div class="console-card">
+                <div class="card-title">Punctuality Classification</div>
+                <div class="card-subtitle">Schedule variance distribution across completed trips</div>
+        """, unsafe_allow_html=True)
         delay_counts = delay_df["delay_category"].value_counts().reset_index()
         delay_counts.columns = ["Category", "Trips"]
         fig_del = px.bar(
@@ -785,14 +942,17 @@ elif menu == "Fleet & Dispatch":
                 "Severe Delay (>15m)": "#ef4444",
                 "Cancelled": "#64748b"
             },
-            height=320
+            height=300
         )
-        fig_del.update_layout(paper_bgcolor="#0f172a", plot_bgcolor="#0f172a", showlegend=False)
+        fig_del.update_layout(paper_bgcolor="#090d16", plot_bgcolor="#090d16", showlegend=False)
         st.plotly_chart(fig_del, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.markdown("#### Real-Time Dispatch Lifecycle Manager")
-    st.caption("Update active operational states and record schedule deviations.")
+    st.markdown("""
+        <div class="console-card">
+            <div class="card-title">Real-Time Dispatch Lifecycle Manager</div>
+            <div class="card-subtitle">Update operational trip lifecycle states and record schedule deviations</div>
+    """, unsafe_allow_html=True)
     
     trips_list = execute_query("""
         SELECT trip_id, trip_code, route_id, trip_status, scheduled_departure, delay_minutes 
@@ -815,19 +975,23 @@ elif menu == "Fleet & Dispatch":
         new_delay = st.slider("Recorded Delay (Minutes):", -5, 60, sel_t["delay_minutes"])
     with c_btn:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("Update Dispatch Record", type="primary"):
+        if st.button("Update Dispatch Record", type="primary", use_container_width=True):
             d_res = TransitService.update_trip_status(sel_t["trip_id"], new_stat, new_delay)
             if d_res["success"]:
                 st.success(d_res["message"])
             else:
                 st.error(d_res["message"])
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==============================================================================
-# 6. TECHNICAL ARCHITECTURE
+# 6. TECHNICAL LAB
 # ==============================================================================
-elif menu == "Technical Architecture":
-    st.subheader("DP-900 Relational Modeling & Technical Lab")
-    st.write("Demonstration of database normalization, analytical queries, and data hygiene auditing.")
+elif menu == "Technical Lab":
+    st.markdown("""
+        <div class="console-card">
+            <div class="card-title">DP-900 Relational Modeling & Technical Lab</div>
+            <div class="card-subtitle">Interactive SQL query execution, Third Normal Form normalization proofs, and data quality governance</div>
+    """, unsafe_allow_html=True)
 
     tab_sql, tab_erd, tab_audit = st.tabs(["SQL Query Console", "Relational Architecture (3NF)", "Data Governance & Cloud Export"])
 
@@ -873,9 +1037,9 @@ elif menu == "Technical Architecture":
         }
         
         chosen_sample = st.selectbox("Benchmark Query Selection:", list(sample_queries.keys()))
-        sql_input = st.text_area("SQL Command Buffer:", value=sample_queries[chosen_sample].strip(), height=160)
+        sql_input = st.text_area("SQL Command Buffer:", value=sample_queries[chosen_sample].strip(), height=150)
         
-        if st.button("Execute Query"):
+        if st.button("Execute Query", type="primary"):
             t_start = datetime.now()
             try:
                 res_rows = execute_query(sql_input)
@@ -908,11 +1072,13 @@ elif menu == "Technical Architecture":
         st.markdown("---")
         c_exp, c_seed = st.columns(2)
         with c_exp:
-            if st.button("Export Datasets to CSV (Data Lake Staging)"):
+            if st.button("Export Datasets to CSV (Data Lake Staging)", use_container_width=True):
                 files = export_tables_to_csv()
                 st.success(f"Exported {len(files)} CSV files into `/data` directory.")
         with c_seed:
-            if st.button("Re-Seed Production Database"):
+            if st.button("Re-Seed Production Database", use_container_width=True):
                 generate_and_seed_data()
                 st.success("Re-seeded with 160 operational trips and 2,200 transactions.")
                 st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)
